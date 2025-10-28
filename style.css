@@ -1,0 +1,108 @@
+* { box-sizing: border-box; margin:0; padding:0; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ffe5ec, #f0fdf4); 
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.container {
+  background: rgba(255,255,255,0.92);
+  padding: 2rem;
+  border-radius: 22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 370px;
+  text-align: center;
+  position: relative;
+}
+
+h1 {
+  color: #a8caba;              
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  font-size: 1.7rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+form {
+  display: flex;
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+input[type=text] {
+  flex: 1;
+  padding: .65rem 1rem;
+  border: 2px solid #a8caba;    
+  border-radius: 14px;
+  font-size: 1rem;
+  background: #fff;
+  outline: none;
+  transition: border .2s;
+}
+input[type=text]:focus {
+  border-color: #ffb3c6;       
+}
+
+button {
+  background: #ffb3c6;         
+  color: white;
+  border: none;
+  padding: .65rem 1.1rem;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background .2s;
+}
+button:hover { background: #ff94b3; }
+
+ul { list-style: none; }
+li {
+  display: flex;
+  align-items: center;
+  background: #fff9fb;          
+  margin: .45rem 0;
+  padding: .65rem .9rem;
+  border-radius: 14px;
+  border: 1px solid #e6f7ed;   
+  transition: all .2s;
+}
+li.done {
+  opacity: .65;
+  text-decoration: line-through;
+  background: #f0fdf4; 
+}
+li span { 
+  flex: 1; 
+  margin-left: .6rem; 
+  color: #555;
+}
+li input[type=checkbox] { 
+  cursor: pointer; 
+  accent-color: #a8caba;
+}
+
+
+.del {
+  background: #ffb3c6;
+  color: white;
+  border: none;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .2s;
+}
+.del:hover { background: #ff94b3; }
+
+h1::after {
+  content: "♡";
+  margin-left: .4rem;
+  color: #ffb3c6;
+  font-size: 1.2rem;
+}

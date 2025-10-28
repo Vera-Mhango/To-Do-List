@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Girly To-Do</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1>To-Do List</h1>
+
+    <form id="addForm">
+      <input type="text" id="newItem" placeholder="Add a cute task…" required autocomplete="off">
+      <button type="submit">Add</button>
+    </form>
+
+    <ul id="todoList"></ul>
+  </div>
+
+  <script>
+    const form = document.getElementById('addForm');
+    const input = document.getElementById('newItem');
+    const list = document.getElementById('todoList');
+
+    async function loadTodos() {
+      const res = await fetch('/api/todos');
+      const todos = await res.json();
+      render(todos);
+    }
+
+    function render(todos) {
+      list.innerHTML = '';
+      todos.forEach(item => {
+        const li = document.createElement('li');
+        li.dataset.id = item.id;
+        li.className = item.done ? 'done' : '';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = item.done;
+        checkbox.addEventListener('change', () => toggle(item.id));
+
+        const span = document.createElement('span');
+        span.textContent = item.text;
+
+        const del = document.createElement('button');
+        del.textContent = '-';
+        del.className = 'del';
+        del.addEventListener('click', () => remove(item.id));
+
+        li.append(checkbox, span, del);
+        list.appendChild(li);
+      });
+    }
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return;
+
+      const res = await fetch('/api/todos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text })
+      });
+      const newItem = await res.json();
+      render([...(await fetch('/api/todos').then(r=>r.json()))]);
+      input.value = '';
+    });
+
+    async function toggle(id) {
+      await fetch(`/api/todos/${id}`, { method: 'PATCH' });
+      loadTodos();
+    }
+
+    async function remove(id) {
+      await fetch(`/api/todos/${id}`, { method: 'DELETE' });
+      loadTodos();
+    }
+
+    loadTodos();
+  </script>
+</body>
+</html>
